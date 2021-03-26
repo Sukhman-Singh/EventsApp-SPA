@@ -18,6 +18,10 @@ defmodule EventsApp.Events.Event do
 	IO.inspect "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 	IO.inspect attrs
 	IO.inspect "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	
+	{_, attrs} = Map.pop(attrs, "name")
+	IO.inspect attrs
+
     event
     |> cast(attrs, [:name, :body, :date, :user_id])
     |> validate_required([:name, :body, :date, :user_id])

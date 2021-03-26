@@ -10,7 +10,11 @@ import flatpickr from "flatpickr";
 
 export default function EventsNew() {
   let history = useHistory();
-  let [event, setEvent] = useState({});
+  let [event, setEvent] = useState({
+    name: "",
+    body: "",
+    date: "",
+  });
 
   function onSubmit(ev) {
     ev.preventDefault();
