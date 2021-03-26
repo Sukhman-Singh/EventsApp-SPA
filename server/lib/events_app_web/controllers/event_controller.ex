@@ -3,6 +3,10 @@ defmodule EventsAppWeb.EventController do
 
   alias EventsApp.Events
   alias EventsApp.Events.Event
+  alias EventsAppWeb.Plugs
+
+  plug Plugs.RequireAuth when action
+    in [:create]
 
   action_fallback EventsAppWeb.FallbackController
 
@@ -17,6 +21,10 @@ defmodule EventsAppWeb.EventController do
 	IO.inspect "----------------"
 
     user = conn.assigns[:current_user]
+
+	IO.inspect user
+	IO.inspect "USER^^^^^^^^^"
+
     event_params = event_params
     |> Map.put("user_id", 1)
 
