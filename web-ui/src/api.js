@@ -1,7 +1,7 @@
 import store from './store';
 
 export async function api_get(path) {
-    let text = await fetch("http://localhost:4000/api/v1" + path, {});
+    let text = await fetch("http://events-spa-server.sukhmansingh.com/api/v1" + path, {});
     let resp = await text.json();
     return resp.data;
 }
@@ -29,7 +29,7 @@ async function api_post(path, data) {
     body: JSON.stringify(data),
   };
   let text = await fetch(
-    "http://localhost:4000/api/v1" + path, opts);
+    "http://events-spa-server.sukhmansingh.com/api/v1" + path, opts);
   return await text.json();
 }
 
@@ -78,7 +78,7 @@ export async function create_event(event) {
     //  - multipart-form-data
   };
   let text = await fetch(
-    "http://localhost:4000/api/v1/events", opts);
+    "http://events-spa-server.sukhmansingh.com/api/v1/events", opts);
   return await text.json();
 }
 
