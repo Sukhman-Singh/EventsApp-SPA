@@ -57,16 +57,29 @@ export function create_user(user) {
   return api_post("/users", {user});
 }
 
-export function create_event(event) {
+export async function create_event(event) {
+  //let state = store.getState();
+  // let token = state?.session?.token;
+
   let data = new FormData();
-  data.append("event[name]", event.name);
-  data.append("event[body]", event.body);
-  fetch("http://localhost:4000/api/v1/events", {
+  data.append("name", event.name);
+  data.append("body", event.body);
+  data.append("date", event.date);
+  let opts = {
     method: 'POST',
     body: data,
-  }).then((resp) => {
-    console.log(resp);
-  });
+   // headers: {
+   //   'x-auth': token,
+   // },
+    // fetch will magically do the right thing
+    // with our FormData:
+    //  - It's going to read the file
+    //  - It's going to pick correct headers
+    //  - multipart-form-data
+  };
+  let text = await fetch(
+    "http://localhost:4000/api/v1/events", opts);
+  return await text.json();
 }
 
 export function load_defaults() {

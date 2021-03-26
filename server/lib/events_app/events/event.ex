@@ -15,6 +15,9 @@ defmodule EventsApp.Events.Event do
 
   @doc false
   def changeset(event, attrs) do
+	IO.inspect "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	IO.inspect attrs
+	IO.inspect "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     event
     |> cast(attrs, [:name, :body, :date, :user_id])
     |> validate_required([:name, :body, :date, :user_id])

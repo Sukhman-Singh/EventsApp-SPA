@@ -54,6 +54,8 @@ defmodule EventsApp.Events do
 
   """
   def create_event(attrs \\ %{}) do
+	IO.inspect attrs
+	IO.inspect "CREATING EVENT"
     %Event{}
     |> Event.changeset(attrs)
     |> Repo.insert()

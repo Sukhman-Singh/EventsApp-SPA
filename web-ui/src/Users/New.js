@@ -34,6 +34,7 @@ function UsersNew() {
 
   function onSubmit(ev) {
     ev.preventDefault();
+    console.log(ev);
     console.log(user);
 
     let data = pick(user, ['name', 'email', 'password']);

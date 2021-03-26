@@ -2,18 +2,29 @@ import React from 'react';
 
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import { useState } from 'react'
-import flatpickr from 'flatpickr';
+import { useHistory } from 'react-router-dom';
 
-import { create_event } from '../api';
+import { create_event, fetch_events } from '../api';
+
+import flatpickr from "flatpickr";
 
 export default function EventsNew() {
+  let history = useHistory();
   let [event, setEvent] = useState({});
 
   function onSubmit(ev) {
     ev.preventDefault();
     console.log(ev);
     console.log(event);
-    create_event(event);
+    create_event(event).then((resp) => {
+      if (resp["errors"]) {
+        console.log("errors", resp.errors);
+      }
+      else {
+        history.push("/");
+        fetch_events();
+      }
+    });
   }
 
   function update(field, ev) {
@@ -22,14 +33,18 @@ export default function EventsNew() {
     setEvent(p1);
   }
 
-  flatpickr('.date',
-  {
-	  enableTime: true,
-	  dateFormat:"Y-m-d H:i",
+  flatpickr('#date',
+	  {
+		  enableTime:true,
+		  dateForm:"Y-m-d H:i",
+		  onChange: function(_selectedDates, dateStr, _instance) {
+			  let p1 = Object.assign({}, event);
+			  p1["date"] = dateStr;
+			  setEvent(p1);
+		  }
+	  });
 
-  });
-
-  return (
+   return (
     <Row>
       <Col>
         <h2>New Event</h2>
@@ -56,10 +71,10 @@ export default function EventsNew() {
           <Form.Group>
             <Form.Label>Date</Form.Label>
             <Form.Control type="text"
-	                  className="date"
+	                  id="date"
                           onChange={
 				  (ev) => update("date", ev)}
-                          value={event.date} />
+	   		  value={event.date} />
           </Form.Group>
 
           <Button variant="primary" type="submit">

@@ -11,7 +11,17 @@ defmodule EventsAppWeb.EventController do
     render(conn, "index.json", events: events)
   end
 
-  def create(conn, %{"event" => event_params}) do
+  def create(conn, event_params) do
+
+	IO.inspect event_params
+	IO.inspect "----------------"
+
+    user = conn.assigns[:current_user]
+    event_params = event_params
+    |> Map.put("user_id", 1)
+
+    IO.inspect({:event, event_params})
+
     with {:ok, %Event{} = event} <- Events.create_event(event_params) do
       conn
       |> put_status(:created)
